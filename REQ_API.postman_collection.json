@@ -1,0 +1,397 @@
+{
+	"info": {
+		"_postman_id": "9cf28e63-716e-489f-aee7-843d8f806325",
+		"name": "REQ_API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "11628402",
+		"_collection_link": "https://gold-robot-534123.postman.co/workspace/New_API_Tests~96d5681b-b1e7-4a0e-85a3-e635bba30777/collection/11628402-9cf28e63-716e-489f-aee7-843d8f806325?action=share&source=collection_link&creator=11628402"
+	},
+	"item": [
+		{
+			"name": "New Request",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"///check if response status is 200...\r",
+							"pm.test(\"Successful Request\", () => {\r",
+							"    pm.expect(pm.response.code).to.be.oneOf([200, 202, 204, 401, 403, 404]);\r",
+							"});\r",
+							"\r",
+							"//Parse JSON data\r",
+							"let JsonData = pm.response.json();\r",
+							"pm.environment.set(\"email\", JsonData.Id); \r",
+							"\r",
+							"//Log for response body\r",
+							"console.log(\"Response Body\",JsonData);\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"followAuthorizationHeader": true,
+				"followOriginalHttpMethod": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-api-key",
+						"value": "reqres-free-v1",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{devVariable}}/api/users?page=2",
+					"host": [
+						"{{devVariable}}"
+					],
+					"path": [
+						"api",
+						"users"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "2"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Negative_Sce",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"///verify if response is returning 404\r",
+							"// Test if the response status is 401 or 404, otherwise log an error\r",
+							"pm.test(\"Status code is 401\", function () {\r",
+							"  if (pm.response.code === 401) {\r",
+							"    pm.expect(pm.response.code).to.eql(404);\r",
+							"  } else {\r",
+							"    console.error(\"Unexpected status code: \" + pm.response.code);\r",
+							"  }\r",
+							"});\r",
+							"\r",
+							"//== , <=, >=, <, >, != and =="
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-api-key",
+						"value": "reqres-free-v1",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{devVariable}}/api/users/23",
+					"host": [
+						"{{devVariable}}"
+					],
+					"path": [
+						"api",
+						"users",
+						"23"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update_Request",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"///check if response status is 200...\r",
+							"pm.test(\"Successful Update request\", () => {\r",
+							"    pm.expect(pm.response.code).to.be.oneOf([200, 202, 204, 401, 403, 404]);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "x-api-key",
+						"value": "reqres-free-v1",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "\r\n{\r\n    \"name\": \"{{name}}\",\r\n    \"job\": \"{{job}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{devVariable}}/api/users/2",
+					"host": [
+						"{{devVariable}}"
+					],
+					"path": [
+						"api",
+						"users",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update_Req",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Updating Data is successful\", function () {\r",
+							"   pm.expect(pm.response.code).to.be.oneOf([200, 202, 204, 401, 403, 404]);\r",
+							"});\r",
+							"\r",
+							"//pm.test(\"Verify Data\", function() {\r",
+							"    //var jsonData = pm.response.json();\r",
+							"    //pm.expect(jsonData.email).to.eql(data['job']);\r",
+							"//});\r",
+							"\r",
+							"//pm.test(\"Verify Data\", function() {\r",
+							"    //var jsonData = pm.response.json();\r",
+							"    //pm.expect(jsonData.email).to.eql(data['name']);\r",
+							"//});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "x-api-key",
+						"value": "reqres-free-v1",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": " \r\n\r\n{\r\n    \"name\": \"{{name}}\",\r\n    \"job\": \"{{job}}\"\r\n\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{devVariable}}/api/users/2",
+					"host": [
+						"{{devVariable}}"
+					],
+					"path": [
+						"api",
+						"users",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "New_Data",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful POST request\", () => {\r",
+							"    pm.expect(pm.response.code).to.be.oneOf([200, 201, 401, 403]);\r",
+							"});\r",
+							"\r",
+							"///Validate the response body\r",
+							"//pm.test (\"Response contains User ID\", function() {\r",
+							"    ///const jsonData = pm.response.json();\r",
+							"   // pm.expect(jsonData).to.have.property(\"name\");\r",
+							"    // console.log(\"name\", jsonData.id);\r",
+							"\r",
+							"\r",
+							"\r",
+							"//validate if new data is created..\r",
+							"pm.test(\"Status code name has a string\", function() {\r",
+							"    pm.response.to.have.status(\"Created\");\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-api-key",
+						"value": "reqres-free-v1",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t \"name\": \"{{name}}\",\r\n\t \"gender\": \"{{gender}}\",\r\n\t \"status\": \"{{status}}\"\r\n   }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{devVariable}}/api/users",
+					"host": [
+						"{{devVariable}}"
+					],
+					"path": [
+						"api",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete_Data",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful DELETE request\", () => {\r",
+							"    pm.expect(pm.response.code).to.be.oneOf([200, 202, 204, 401, 403, 404]);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response time is less than 200ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "x-api-key",
+						"value": "reqres-free-v1",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t \"name\": \"{{name}}\",\r\n\t \"gender\": \"{{gender}}\",\r\n\t \"status\": \"{{status}}\"\r\n   }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{devVariable}}/api/users",
+					"host": [
+						"{{devVariable}}"
+					],
+					"path": [
+						"api",
+						"users"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "devVariable",
+			"value": "https://reqres.in"
+		},
+		{
+			"key": "name",
+			"value": "Antonio"
+		},
+		{
+			"key": "gender",
+			"value": "Male"
+		},
+		{
+			"key": "status",
+			"value": "Active"
+		},
+		{
+			"key": "job",
+			"value": "zion resident",
+			"type": "string"
+		}
+	]
+}
